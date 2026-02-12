@@ -2,17 +2,16 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        String person = "\uD83E\uDDD9\u200D";
+        String person = "ГГ";
         int personLive = 3;
-        String monster = "\uD83E\uDDDF\u200D";
+        String monster = "Мо";
         int sizeBoard = 3;
         int personX = 1;
         int personY = 3;
 
         int step = 0;
-        // \n, \t - как спец символ(упомянуть)
         String gamingField = "+ —— + —— + —— +\n"
-                + "|    |    | \uD83C\uDFE0 |\n"
+                + "|    |    | За |\n"
                 + "+ —— + —— + —— +\n"
                 + "|    | " + monster + " |    |\n"
                 + "+ —— + —— + —— +\n"
