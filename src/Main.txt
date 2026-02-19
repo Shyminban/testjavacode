@@ -1,0 +1,81 @@
+import java.util.Random;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        String person = "ГГ";
+        int personLive = 3;
+        String monster = "Мо";
+        int sizeBoard = 3;
+        int personX = 1;
+        int personY = 3;
+        String castle = "ЗЗ";
+        String leftBlock = " | ";
+        String rightBlock = " |";
+        String wall = " + —— + —— + —— + —— + —— + ";
+
+        int step = 0;
+        System.out.println("Привет! Ты готов начать играть в игру? (Напиши: ДА или НЕТ)");
+
+        Random random = new Random();
+
+        Scanner sc = new Scanner(System.in);
+        String answer = sc.nextLine();
+        System.out.println("Ваш ответ:\t" + answer);
+
+        switch (answer) {
+            case "ДА" -> {
+                System.out.println("Выбери сложность игры(от 1 до 3):");
+                int difficultGame = sc.nextInt();
+                int size = difficultGame += 2;
+                int castleX = 1 + random.nextInt(1, size);
+                int castleY = 3;
+
+
+
+                System.out.println("Выбранная сложность:\t" + difficultGame);
+
+                System.out.println("Количество жизней:\t" + personLive + "\n");
+                while ((personLive > 0) && !(castleX == personX && castleY == personY)) {
+                    // логика хода
+
+                    System.out.println("Введите куда будет ходить персонаж(ход возможен только по вертикали и горизонтали на одну клетку;" +
+                            "\nКоординаты персонажа - (x: " + personX + ", y: " + personY + "))");
+                    int x = sc.nextInt();
+                    int y = sc.nextInt();
+                    System.out.println(x + ", " + y);
+
+                    // проверка
+                    if (x != personX && y != personY) {
+                        System.out.println("Неккоректный ход");
+                    } else if (Math.abs(x - personX) == 1 || Math.abs(y - personY) == 1) {
+                        personX = x;
+                        personY = y;
+                        step++;
+                        System.out.println("Ход корректный; Новые координаты: " + personX + ", " + personY +
+                                "\nХод номер: " + step);
+                        for (int y; y >= size; y++) {
+                            System.out.println(wall);
+                            for (int x;  x >= size; x++) {
+                                System.out.print(leftBlock);
+                                if (personY == y && personX == x) {
+                                    System.out.print(person);
+                                } else if (castleX == x && castleY == y) {
+                                    System.out.print(castle);
+                                } else {
+                                    System.out.print("  ");
+                                }
+                            }
+                            System.out.println(rightBlock);
+                        }
+                    } else {
+                        System.out.println("Координаты не изменены");
+                    }
+
+                }
+            }
+                case "НЕТ" -> System.out.println("Жаль, приходи еще!");
+        }
+
+    }
+}
