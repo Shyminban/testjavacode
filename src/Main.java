@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
@@ -5,55 +6,102 @@ public class Main {
         String person = "ГГ";
         int personLive = 3;
         String monster = "Мо";
-        int sizeBoard = 3;
-        int personX = 1;
-        int personY = 3;
+        String leftBlock = " | ";
+        String rightBlock = " |";
 
         int step = 0;
-        String gamingField = "+ —— + —— + —— +\n"
-                + "|    |    | За |\n"
-                + "+ —— + —— + —— +\n"
-                + "|    | " + monster + " |    |\n"
-                + "+ —— + —— + —— +\n"
-                + "| " + person + " |    |    |\n"
-                + "+ —— + —— + —— +";
-
         System.out.println("Привет! Ты готов начать играть в игру? (Напиши: ДА или НЕТ)");
 
+        Random random = new Random();
         Scanner sc = new Scanner(System.in);
         String answer = sc.nextLine();
         System.out.println("Ваш ответ:\t" + answer);
 
-        switch (answer) {
-            case "ДА" -> {
-                System.out.println("Выбери сложность игры(от 1 до 5):");
+        switch (answer.toUpperCase()) {
+            case "ДА":
+                System.out.println("Выбери сложность игры(от 1 до 3):");
                 int difficultGame = sc.nextInt();
-                System.out.println("Выбранная сложность:\t" + difficultGame);
+                sc.nextLine();
+                int size = difficultGame + 2;
 
-                System.out.println(gamingField);
-                System.out.println("Количество жизней:\t" + personLive + "\n");
-                System.out.println("Введите куда будет ходить персонаж(ход возможен только по вертикали и горизонтали на одну клетку;" +
-                        "\nКоординаты персонажа - (x: " + personX + ", y: " + personY + "))");
-                int x = sc.nextInt();
-                int y = sc.nextInt();
-                System.out.println(x + ", " + y);
+                int personX = 1;
+                int personY = 1;
 
-                // проверка
-                if (x != personX && y != personY) {
-                    System.out.println("Неккоректный ход");
-                } else if (Math.abs(x - personX) == 1 || Math.abs(y - personY) == 1) {
-                    personX = x;
-                    personY = y;
-                    step++;
-                    System.out.println("Ход корректный; Новые координаты: " + personX + ", " + personY +
-                            "\nХод номер: " + step);
-                } else {
-                    System.out.println("Координаты не изменены");
+                int castleX = random.nextInt(size);
+                int castleY = random.nextInt(size);
+
+                while (castleX == personX && castleY == personY) {
+                    castleX = random.nextInt(size);
+                    castleY = random.nextInt(size);
                 }
-            }
-            case "НЕТ" -> System.out.println("Жаль, приходи еще!");
-            default -> System.out.println("Данные введены неккоректно");
-        }
 
+                System.out.println("Выбранная сложность:\t" + difficultGame);
+                System.out.println("Размер поля: " + size + "x" + size);
+                System.out.println("Координаты замка: X=" + castleX + ", Y=" + castleY);
+                System.out.println("Количество жизней:\t" + personLive + "\n");
+
+                while (personLive > 0 && !(castleX == personX && castleY == personY)) {
+                    String wall = " +";
+                    for (int i = 0; i < size; i++) {
+                        wall += " —— +";
+                    }
+
+                    System.out.println(wall);
+                    for (int y = 0; y < size; y++) {
+                        System.out.print(leftBlock);
+                        for (int x = 0; x < size; x++) {
+                            if (personY == y && personX == x) {
+                                System.out.print(person);
+                            } else if (castleX == x && castleY == y) {
+                                System.out.print("ЗЗ");
+                            } else {
+                                System.out.print("  ");
+                            }
+                            System.out.print(rightBlock);
+                        }
+                        System.out.println();
+                        System.out.println(wall);
+                    }
+
+                    System.out.println("Введите ход ");
+
+                    int nextX, nextY;
+                    try {
+                        nextX = sc.nextInt();
+                        nextY = sc.nextInt();
+                    } catch (Exception e) {
+                        System.out.println("Некорректный ввод. Попробуйте снова.");
+                        sc.nextLine();
+                        continue;
+                    }
+
+                    if (nextX >= 0 && nextX < size && nextY >= 0 && nextY < size) {
+                        if (Math.abs(nextX - personX) + Math.abs(nextY - personY) == 1) {
+                            personX = nextX;
+                            personY = nextY;
+                            step++;
+                            System.out.println("Ход корректный. Новые координаты: X=" + personX + ", Y=" + personY);
+                            System.out.println("Ход номер: " + step);
+
+                            if (personX == castleX && personY == castleY) {
+                                System.out.println("\n*** ПОБЕДА! Вы достигли замка! ***");
+                            }
+
+                        } else {
+                            System.out.println("Неккоректный ход: можно двигаться только на одну клетку по горизонтали или вертикали.");
+                        }
+                    }
+
+
+                }
+                break;
+            case "НЕТ":
+                System.out.println("Жаль, приходи еще!");
+                break;
+            default:
+                System.out.println("Неизвестная команда.");
+                break;
+        }
+        sc.close();
     }
 }
