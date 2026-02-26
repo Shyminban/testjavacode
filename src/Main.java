@@ -8,6 +8,9 @@ public class Main {
         String monster = "Мо";
         String leftBlock = " | ";
         String rightBlock = " |";
+        String wall = " + —— + —— + —— + —— + —— +";
+        String castle = "ЗЗ";
+
 
         int step = 0;
         System.out.println("Привет! Ты готов начать играть в игру? (Напиши: ДА или НЕТ)");
@@ -22,13 +25,14 @@ public class Main {
                 System.out.println("Выбери сложность игры(от 1 до 3):");
                 int difficultGame = sc.nextInt();
                 sc.nextLine();
-                int size = difficultGame + 2;
+                int size = 5;
 
                 int personX = 1;
                 int personY = 1;
 
                 int castleX = random.nextInt(size);
                 int castleY = random.nextInt(size);
+                String[] board = new String[size * size];
 
                 while (castleX == personX && castleY == personY) {
                     castleX = random.nextInt(size);
@@ -39,29 +43,25 @@ public class Main {
                 System.out.println("Размер поля: " + size + "x" + size);
                 System.out.println("Координаты замка: X=" + castleX + ", Y=" + castleY);
                 System.out.println("Количество жизней:\t" + personLive + "\n");
+                System.out.println("Твои кординаты: X=" + personX + ", Y=" + personY);
 
                 while (personLive > 0 && !(castleX == personX && castleY == personY)) {
-                    String wall = " +";
-                    for (int i = 0; i < size; i++) {
-                        wall += " —— +";
-                    }
 
-                    System.out.println(wall);
-                    for (int y = 0; y < size; y++) {
-                        System.out.print(leftBlock);
-                        for (int x = 0; x < size; x++) {
+                    for (int y = 1; y <= size; y++) {
+                        System.out.println(wall);
+                        for (int x = 1; x <= size; x++) {
+                            System.out.print(leftBlock);
                             if (personY == y && personX == x) {
                                 System.out.print(person);
                             } else if (castleX == x && castleY == y) {
-                                System.out.print("ЗЗ");
+                                System.out.print(castle);
                             } else {
                                 System.out.print("  ");
                             }
-                            System.out.print(rightBlock);
                         }
-                        System.out.println();
-                        System.out.println(wall);
+                        System.out.println(rightBlock);
                     }
+                    System.out.println(wall);
 
                     System.out.println("Введите ход ");
 
@@ -74,7 +74,6 @@ public class Main {
                         sc.nextLine();
                         continue;
                     }
-
                     if (nextX >= 0 && nextX < size && nextY >= 0 && nextY < size) {
                         if (Math.abs(nextX - personX) + Math.abs(nextY - personY) == 1) {
                             personX = nextX;
