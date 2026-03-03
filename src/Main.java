@@ -1,15 +1,18 @@
+import PACKAGE_NAME.Monster;
+
 import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        String person = "ГГ";
-        int personLive = 3;
         String monster = "Мо";
         String leftBlock = " | ";
         String rightBlock = " |";
         String wall = " + —— + —— + —— + —— + —— +";
         String castle = "ЗЗ";
+        int size = 5;
+
+        Preson person = new Preson(size);
 
 
         int step = 0;
@@ -25,34 +28,46 @@ public class Main {
                 System.out.println("Выбери сложность игры(от 1 до 3):");
                 int difficultGame = sc.nextInt();
                 sc.nextLine();
-                int size = 5;
 
                 int personX = 1;
-                int personY = 1;
+                int personY = 5;
+                int MonsterCounter = size * size - size - 1;
+                String[] Monsters = new String[MonsterCounter + 1];
 
-                int castleX = random.nextInt(size);
-                int castleY = random.nextInt(size);
+                int castleX = random.nextInt(1, size);
+                int castleY = 1;
                 String[] board = new String[size * size];
+                int count = 0;
+                Monster test;
+                while (count <= MonsterCounter){
+                    Monster Mon;
+                    if (random.nextBoolean()) {
+                        Mon = new Monster(size);
+                    }//else {
+                        //Mon = new BigMonster(sizeBoard);
+                    //}
+                    if (board[Mon.getY()][test.getX()].equals("  ")){
+                        board[Mon.getY()][test.getX()] = test.getImage();
+                        Monsters[count] = test;
+                        count++; // will fix later...
+                    }
 
-                while (castleX == personX && castleY == personY) {
-                    castleX = random.nextInt(size);
-                    castleY = random.nextInt(size);
                 }
 
                 System.out.println("Выбранная сложность:\t" + difficultGame);
                 System.out.println("Размер поля: " + size + "x" + size);
                 System.out.println("Координаты замка: X=" + castleX + ", Y=" + castleY);
-                System.out.println("Количество жизней:\t" + personLive + "\n");
+                System.out.println("Количество жизней:\t" + Preson.getLive() + "\n");
                 System.out.println("Твои кординаты: X=" + personX + ", Y=" + personY);
 
-                while (personLive > 0 && !(castleX == personX && castleY == personY)) {
+                while (Preson.getLive() > 0 && !(castleX == personX && castleY == personY)) {
 
                     for (int y = 1; y <= size; y++) {
                         System.out.println(wall);
                         for (int x = 1; x <= size; x++) {
                             System.out.print(leftBlock);
                             if (personY == y && personX == x) {
-                                System.out.print(person);
+                                System.out.print(Preson.getImage());
                             } else if (castleX == x && castleY == y) {
                                 System.out.print(castle);
                             } else {
