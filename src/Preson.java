@@ -2,8 +2,8 @@ import java.util.Random;
 
 public class Preson {
     protected int x, y;
-    private static String image = "ГГ";
-    private static int live = 3;
+    private String image = "ГГ";
+    private int live = 3;
     Random r = new Random();
 
     Preson(int sizeBoard) {
@@ -28,11 +28,11 @@ public class Preson {
         return y;
     }
 
-    public static int getLive() {
+    public int getLive() {
         return live;
     }
 
-    public static String getImage(){
+    public String getImage(){
         return image;
     }
 
