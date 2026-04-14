@@ -2,13 +2,13 @@ import java.util.Random;
 
 public class Preson {
     protected int x, y;
-    private String image = "ГГ";
+    private String image = "\uD83E\uDDD9\u200D";
     private int live = 3;
-    Random r = new Random();
+    Random random = new Random();
 
     Preson(int sizeBoard) {
         y = sizeBoard;
-        int n = r.nextInt(sizeBoard);
+        int n = random.nextInt(sizeBoard);
         x = n == 0 ? 1 : n;
     }
 

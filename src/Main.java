@@ -3,10 +3,7 @@ import java.util.Scanner;
 
     public class Main {
         public static void main(String[] args) {
-            String leftBlock = " | ";
-            String rightBlock = " |";
-            String wall = " + —— + —— + —— + —— + —— +";
-            String castle = "ЗЗ";
+            String castle = "\uD83C\uDFF0";
             int size = 5;
             Preson person = new Preson(size);
 
@@ -46,8 +43,10 @@ import java.util.Scanner;
                     while (count <= MonsterCounter){
                         if (random.nextBoolean()) {
                             monster1 = new Monster(size);
-                        }else {
+                        }else if(random.nextBoolean()) {
                             monster1 = new BigMonster(size);
+                        }else{
+                            monster1 = new MagicMonster(size);
                         }
                         if (board[monster1.getY()][monster1.getX()].equals("  ") && !(castleX == monster1.getX() && castleY == monster1.getY())) {
                             board[monster1.getY()][monster1.getX()] = monster1.getImage();
