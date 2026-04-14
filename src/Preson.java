@@ -36,9 +36,6 @@ public class Preson {
         return image;
     }
 
-    public void setImage(String image) {
-        this.image = image;
-    }
 
     public boolean moveCorrect(int x, int y){
         return this.x == x && Math.abs(this.y - y) == 1 || this.y == y && Math.abs(this.x - x) == 1;
